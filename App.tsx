@@ -3,9 +3,10 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import DeviceInfo from 'react-native-device-info';
 
 import { HomeScreen, HomeWatchScreen } from '@screens';
+import { database } from '@db';
+import { PreferecesProvider } from '@contexts';
 
 import "./global.css";
-import { database } from '@db';
 
 function App() {
   const [loadingApp, setLoadingApp] = useState(true);
@@ -32,7 +33,9 @@ function App() {
 
   return (
     <SafeAreaProvider>
-      {isWatch ? <HomeWatchScreen /> : <HomeScreen /> }
+      <PreferecesProvider>
+        {isWatch ? <HomeWatchScreen /> : <HomeScreen /> }
+      </PreferecesProvider>
     </SafeAreaProvider>
   );
 }

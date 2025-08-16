@@ -14,13 +14,13 @@ export function HomeScreen() {
       <View className="flex-1 items-center justify-center gap-10">
         <Consumption 
           total={totalConsumption}
-          consumptionAdded={refetch}
         />
 
         <ListConsumption
           list={list}
           selectedDate={selectedDate}
           changeDate={setSelectedDate}
+          consumptionAdded={refetch}
         />
       </View>
     </Screen>

@@ -1,34 +1,43 @@
-import { FlatList, ListRenderItemInfo, ScrollView, View } from "react-native";
+import { ScrollView, View } from "react-native";
 
 import { WaterConsumptionProps } from "@db";
 import { Text } from "@components";
 
 import { DateSelector } from "./DateSelector";
 import { ConsumptionItem } from "./ConsumptionItem";
+import { AddConsumption } from "./AddConsumption";
 
 interface Props {
   selectedDate: Date;
   list: WaterConsumptionProps[];
   changeDate: (date: Date) => void;
+  consumptionAdded: () => void;
 }
-export function ListConsumption({ changeDate, list, selectedDate }: Props) {
+export function ListConsumption({ changeDate, list, selectedDate, consumptionAdded }: Props) {
 
   return (
-    <View className="w-full px-5">
-      <DateSelector selectedDate={selectedDate} changeDate={changeDate} />
+    <View className="w-full px-5 gap-5 mt-[-120]">
+      <View className="p-3 bg-gray-200 rounded-2xl">
+        <DateSelector selectedDate={selectedDate} changeDate={changeDate} />
 
-      {list.length === 0 ? (
-        <EmptyList />
-      ) : (
-        <ScrollView 
-          className="w-full h-[200]" 
-          showsVerticalScrollIndicator={false}
-        >
-          {list.map((item) => (
-            <ConsumptionItem key={item.id} data={item} />
-          ))}
-        </ScrollView>
-      )}
+        {list.length === 0 ? (
+          <EmptyList />
+        ) : (
+          <ScrollView 
+            className="w-full h-[200]" 
+            showsVerticalScrollIndicator={false}
+          >
+            {list.map((item) => (
+              <ConsumptionItem key={item.id} data={item} />
+            ))}
+          </ScrollView>
+        )}
+      </View>
+      
+      <AddConsumption
+        selectedDate={selectedDate}
+        consumptionAdded={consumptionAdded}
+      />
     </View>
   )
 }

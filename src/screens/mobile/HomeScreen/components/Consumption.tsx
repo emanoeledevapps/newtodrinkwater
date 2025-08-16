@@ -1,47 +1,42 @@
+import { View } from "react-native";
+import { AnimatedCircularProgress } from 'react-native-circular-progress';
+
 import { Text } from "@components";
-import { dbService } from "@db";
-import { format } from "date-fns";
-import { useState } from "react";
-import { ActivityIndicator, TouchableOpacity, View } from "react-native";
+import { usePreferencesContext } from "@hooks";
 
 interface Props {
   total: number;
-  consumptionAdded: () => void;
 }
-export function Consumption({ total, consumptionAdded }: Props) {
-  const [loading, setLoading] = useState(false);
-
-  async function handleAddConsumption() {
-    setLoading(true);
-    await dbService.addConsumption({
-      formattedDate: format(new Date(), "dd/MM/yyyy"),
-      quantity: 100
-    });
-    consumptionAdded();
-    setLoading(false);
-  }
+export function Consumption({ total }: Props) {
+  const { goal, unit, darkMode } = usePreferencesContext();
+  const percentDay = (total / goal) * 100 
 
   return (
-    <View className="gap-10 items-center">
-      <View className="flex items-center justify-center relative w-[200] h-[200] rounded-full border-4 border-primary-light dark:border-primary-dark">
-        <Text className="relative font-bold text-3xl text-primary-text-light dark:text-primary-text-dark">
-          {total} ml
-        </Text>
-      </View>
-
-      <TouchableOpacity
-        className="w-28 h-10 rounded-full bg-accent-light items-center justify-center"
-        onPress={handleAddConsumption}
-        disabled={loading}
+    <View className="items-center">
+      <AnimatedCircularProgress
+        size={250}
+        width={15}
+        fill={percentDay}
+        tintColor={darkMode ? "#E0F2FE": "#1E3A8A"}
+        backgroundColor="#aaa" 
+        arcSweepAngle={180}
+        rotation={270}
       >
-        {loading ? (
-          <ActivityIndicator size={20} color="white" />
-        ) : (
-          <Text className="font-bold text-white">
-            +100 ml
-          </Text>
-        )}
-      </TouchableOpacity>
+        {
+          () => (
+            <View className="items-center mt-[-30]">
+              <Text 
+                className="font-bold text-primary-text-light dark:text-primary-text-dark text-3xl"
+              >
+                {Intl.NumberFormat("pt-BR").format(total)} {unit}
+              </Text>
+              <Text className="text-sm text-secondary-text-light dark:text-secondary-text-dark">
+                Meta: {goal}
+              </Text>
+            </View>
+          )
+        }
+      </AnimatedCircularProgress>
     </View>
   )
 }
