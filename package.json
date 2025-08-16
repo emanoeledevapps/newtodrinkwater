@@ -12,6 +12,7 @@
   "dependencies": {
     "@react-native/new-app-screen": "0.81.0",
     "date-fns": "^4.1.0",
+    "date-fns-tz": "^3.2.0",
     "nativewind": "^4.1.23",
     "react": "19.1.0",
     "react-native": "0.81.0",

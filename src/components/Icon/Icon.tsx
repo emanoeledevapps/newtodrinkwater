@@ -1,5 +1,8 @@
 import { TouchableOpacity } from "react-native";
 import { ChevronLeftIcon } from "../../assets/icons/ChevronLeft";
+import { ChevronRightIcon } from "../../assets/icons/ChevronRight";
+import { CalendarIcon } from "../../assets/icons/Calendar";
+import { GlassIcon } from "../../assets/icons/Glass";
 
 export interface IconSvgProps {
   color?: string;
@@ -27,6 +30,9 @@ export function Icon({ name, onPress, color = "white", size = 20}: Props) {
 }
 
 const icons = {
-  chevronLeft: ChevronLeftIcon
+  chevronLeft: ChevronLeftIcon,
+  chevronRight: ChevronRightIcon,
+  calendar: CalendarIcon,
+  glass: GlassIcon
 }
 export type IconNames = keyof typeof icons;
