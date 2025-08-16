@@ -15,13 +15,15 @@ export function DateSelector({ selectedDate, changeDate }: Props) {
   const yesterday = isYesterday(selectedDate);
 
   return (
-    <View className="w-full flex-row items-center justify-between">
+    <View 
+      className="w-full flex-row items-center justify-between border-b border-gray-300 dark:border-background-dark pb-3"
+    >
       <View className="flex-row items-center gap-3">
         <Icon
           name="calendar" 
-          color="#aaa"
+          color={darkMode ? "#E0F2FE" : "#1E3A8A"}
         />
-        <Text className="text-[#aaa]">
+        <Text className="text-primary-text-light dark:text-primary-text-dark">
           {today ? "Hoje" : yesterday ? "Ontem" : dateString}
         </Text>
       </View>

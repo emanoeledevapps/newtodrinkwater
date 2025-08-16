@@ -17,7 +17,7 @@ export function ListConsumption({ changeDate, list, selectedDate, consumptionAdd
 
   return (
     <View className="w-full px-5 gap-5 mt-[-120]">
-      <View className="p-3 bg-gray-200 rounded-2xl">
+      <View className="p-3 bg-card-light dark:bg-card-dark rounded-2xl">
         <DateSelector selectedDate={selectedDate} changeDate={changeDate} />
 
         {list.length === 0 ? (

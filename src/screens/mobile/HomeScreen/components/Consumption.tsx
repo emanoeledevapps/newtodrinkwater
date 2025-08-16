@@ -17,21 +17,21 @@ export function Consumption({ total }: Props) {
         size={250}
         width={15}
         fill={percentDay}
-        tintColor={darkMode ? "#E0F2FE": "#1E3A8A"}
-        backgroundColor="#aaa" 
+        tintColor="#2563EB"
+        backgroundColor={darkMode ? "#272729" : "#aaa"}
         arcSweepAngle={180}
         rotation={270}
       >
         {
           () => (
-            <View className="items-center mt-[-30]">
+            <View className="items-center mt-[-40]">
               <Text 
                 className="font-bold text-primary-text-light dark:text-primary-text-dark text-3xl"
               >
                 {Intl.NumberFormat("pt-BR").format(total)} {unit}
               </Text>
               <Text className="text-sm text-secondary-text-light dark:text-secondary-text-dark">
-                Meta: {goal}
+                Meta: {Intl.NumberFormat("pt-BR").format(goal)}
               </Text>
             </View>
           )
