@@ -1,7 +1,7 @@
 import { View } from "react-native";
 
 import { WaterConsumptionProps } from "@db";
-import { Text } from "@components";
+import { Icon, Text } from "@components";
 
 import { ConsumptionItem } from "./ConsumptionItem";
 
@@ -11,7 +11,12 @@ interface Props {
 export function ListConsumption({ list }: Props) {
 
   return (
-    <View className="w-full px-5 gap-5">
+    <View className="w-full px-5 pb-10">
+      <View className="flex-row items-center gap-1 mb-2">
+        <Icon name="calendar" size={16} />
+        <Text className="text-white text-sm">Hoje</Text>
+      </View>
+
       {list.length === 0 ? (
         <EmptyList />
       ) : (
