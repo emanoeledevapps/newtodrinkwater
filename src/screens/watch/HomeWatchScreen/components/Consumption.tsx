@@ -1,14 +1,21 @@
+import { useState } from "react";
+import { ActivityIndicator, TouchableOpacity, View, useWindowDimensions } from "react-native";
+import { format } from "date-fns";
+import { AnimatedCircularProgress } from 'react-native-circular-progress';
+
 import { Text } from "@components";
 import { dbService } from "@db";
-import { format } from "date-fns";
-import { useState } from "react";
-import { ActivityIndicator, TouchableOpacity, View } from "react-native";
+import { usePreferencesContext } from "@hooks";
 
 interface Props {
   total: number;
   consumptionAdded: () => void;
 }
 export function Consumption({ total, consumptionAdded }: Props) {
+  const { width, height } = useWindowDimensions();
+  const { goal, unit, glassSize } = usePreferencesContext();
+  const percentDay = (total / goal) * 100 ;
+
   const [loading, setLoading] = useState(false);
 
   async function handleAddConsumption() {
@@ -22,11 +29,33 @@ export function Consumption({ total, consumptionAdded }: Props) {
   }
 
   return (
-    <View className="gap-3 items-center">
-      <Text className="relative font-bold text-3xl text-primary-light">
-        {total} ml
-      </Text>
-
+    <View style={{ width, height }} className="items-center justify-center">
+      <AnimatedCircularProgress
+        size={width - 30}
+        width={15}
+        fill={percentDay}
+        tintColor="#2563EB"
+        backgroundColor={"#272729"}
+        arcSweepAngle={180}
+        rotation={270}
+      >
+        {
+          () => (
+            <View className="items-center mt-[-40]">
+              <Text 
+                className="font-bold text-primary-text-dark text-xl"
+              >
+                {Intl.NumberFormat("pt-BR").format(total)} {unit}
+              </Text>
+              <Text className="text-sm text-secondary-text-dark">
+                Meta: {Intl.NumberFormat("pt-BR").format(goal)}
+              </Text>
+            </View>
+          )
+        }
+      </AnimatedCircularProgress>
+      
+      <View className="mt-[-40]">
         <TouchableOpacity
           className="w-28 h-10 rounded-full bg-gray-700 items-center justify-center"
           onPress={handleAddConsumption}
@@ -36,10 +65,11 @@ export function Consumption({ total, consumptionAdded }: Props) {
             <ActivityIndicator size={20} color="white" />
           ) : (
             <Text className="font-bold text-white">
-              +100 ml
+              +{glassSize} {unit}
             </Text>
           )}
         </TouchableOpacity>
+      </View>
     </View>
   )
 }

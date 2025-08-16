@@ -9,7 +9,7 @@ interface Props {
 }
 export function Consumption({ total }: Props) {
   const { goal, unit, darkMode } = usePreferencesContext();
-  const percentDay = (total / goal) * 100 
+  const percentDay = (total / goal) * 100;
 
   return (
     <View className="items-center">

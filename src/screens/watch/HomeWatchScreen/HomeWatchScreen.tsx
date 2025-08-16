@@ -1,15 +1,25 @@
+import { ScrollView, View } from "react-native";
+
 import { useGetConsumptionDay } from "@db";
-import { useState } from "react";
-import { View } from "react-native";
+
 import { Consumption } from "./components/Consumption";
+import { ListConsumption } from "./components/ListConsumption/ListConsumption";
+import { useEffect, useState } from "react";
 
 export function HomeWatchScreen() {
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const { totalConsumption, refetch } = useGetConsumptionDay({ date: selectedDate })
+  const { list, totalConsumption, refetch } = useGetConsumptionDay({ date: selectedDate });
+
+  useEffect(() => {
+    setSelectedDate(new Date());
+  }, [])
 
   return (
     <View className="flex-1 items-center justify-center bg-black">
-      <Consumption total={totalConsumption} consumptionAdded={refetch} />
+      <ScrollView>
+        <Consumption total={totalConsumption} consumptionAdded={refetch} />
+        <ListConsumption list={list} />
+      </ScrollView>
     </View>
   )
 }
