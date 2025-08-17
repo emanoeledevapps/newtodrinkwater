@@ -3,9 +3,10 @@ import { database, WaterConsumptionProps } from "@db";
 interface AddConsumptionProps {
   quantity: number;
   formattedDate: string;
+  registerType: "glass" | "bottle";
 }
-async function addConsumption({ formattedDate, quantity }: AddConsumptionProps) {
-  await database.insertConsumption({ formattedDate, quantity })
+async function addConsumption({ formattedDate, quantity, registerType }: AddConsumptionProps) {
+  await database.insertConsumption({ formattedDate, quantity, registerType })
 }
 
 interface GetConsumptionPerDayProps {

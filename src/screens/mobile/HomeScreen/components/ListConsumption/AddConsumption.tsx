@@ -19,7 +19,8 @@ export function AddConsumption({ consumptionAdded, selectedDate }: Props) {
     setLoading(true);
     await dbService.addConsumption({
       formattedDate: format(new Date(), "dd/MM/yyyy"),
-      quantity: glassSize
+      quantity: glassSize,
+      registerType: "glass"
     });
     consumptionAdded();
     setLoading(false);
