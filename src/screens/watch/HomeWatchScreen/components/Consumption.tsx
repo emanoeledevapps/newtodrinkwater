@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ActivityIndicator, TouchableOpacity, View, useWindowDimensions } from "react-native";
 import { format } from "date-fns";
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
+import { sendMessage } from "react-native-wear-connectivity";
 
 import { Text } from "@components";
 import { dbService } from "@db";
@@ -26,7 +27,14 @@ export function Consumption({ total, consumptionAdded }: Props) {
       registerType: "glass"
     });
     consumptionAdded();
+    sendTestMessageToMobile();
     setLoading(false);
+  }
+
+  function sendTestMessageToMobile() {
+    sendMessage({ event: "message", text: 'Hello watch!' }, (reply) => {
+      console.log(reply); // {"text": "Hello React Native app!"}
+    }, ((err) => { console.log(err)}) );
   }
 
   return (

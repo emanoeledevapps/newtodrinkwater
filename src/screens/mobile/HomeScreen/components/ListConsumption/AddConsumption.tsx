@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ActivityIndicator, TouchableOpacity, View } from "react-native";
 import { format, isToday } from "date-fns";
+import { sendMessage } from "react-native-wear-connectivity";
 
 import { dbService } from "@db";
 import { Text } from "@components";
@@ -23,7 +24,14 @@ export function AddConsumption({ consumptionAdded, selectedDate }: Props) {
       registerType: "glass"
     });
     consumptionAdded();
+    sendTestMessageToWear()
     setLoading(false);
+  }
+
+  function sendTestMessageToWear() {
+    sendMessage({ text: 'Hello watch!' }, (reply) => {
+      console.log(reply); // {"text": "Hello React Native app!"}
+    }, (() => {}) );
   }
 
   return (
