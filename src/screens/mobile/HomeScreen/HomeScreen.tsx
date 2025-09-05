@@ -11,15 +11,15 @@ export function HomeScreen() {
   const { list, totalConsumption, refetch } = useGetConsumptionDay({ date: selectedDate });
 
   useEffect(() => {
-  const unsubscribe = watchEvents.on('message', () => {
-    Alert.alert("ok")
-    //setCount((prevCount) => prevCount + 1);
-  });
+    const unsubscribe = watchEvents.on('message', () => {
+      Alert.alert("ok")
+      //setCount((prevCount) => prevCount + 1);
+    });
 
-  return () => {
-    unsubscribe();
-  };
-}, []);
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   return (
     <Screen>
