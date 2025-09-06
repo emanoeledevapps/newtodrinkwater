@@ -4,9 +4,10 @@ interface AddConsumptionProps {
   quantity: number;
   formattedDate: string;
   registerType: "glass" | "bottle";
+  origin: "smartphone" | "watch";
 }
-async function addConsumption({ formattedDate, quantity, registerType }: AddConsumptionProps) {
-  await database.insertConsumption({ formattedDate, quantity, registerType })
+async function addConsumption({ formattedDate, quantity, registerType, origin }: AddConsumptionProps) {
+  await database.insertConsumption({ formattedDate, quantity, registerType, origin })
 }
 
 interface GetConsumptionPerDayProps {

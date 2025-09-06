@@ -22,7 +22,8 @@ async function createTable() {
       quantity INTEGER NOT NULL,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       formatted_date TEXT,
-      register_type TEXT
+      register_type TEXT,
+      origin TEXT
     );
   `;
   await database.executeSql(query);
@@ -32,16 +33,17 @@ interface InsertConsumptionProps {
   quantity: number;
   formattedDate: string;
   registerType: "glass" | "bottle";
+  origin: "smartphone" | "watch";
 }
-async function insertConsumption({ formattedDate, quantity, registerType }: InsertConsumptionProps) {
+async function insertConsumption({ formattedDate, quantity, registerType, origin }: InsertConsumptionProps) {
   const database = await openDB();
   const id = Math.random().toString(36).substring(2, 15 + 2);
 
   const query = `
-    INSERT INTO WaterConsumption (id, quantity, formatted_date, register_type)
-    VALUES (?, ?, ?, ?);
+    INSERT INTO WaterConsumption (id, quantity, formatted_date, register_type, origin)
+    VALUES (?, ?, ?, ?, ?);
   `;
-  await database.executeSql(query, [id, quantity, formattedDate, registerType]);
+  await database.executeSql(query, [id, quantity, formattedDate, registerType, origin]);
 };
 
 async function getAllConsumptions(): Promise<WaterConsumptionProps[]> {
