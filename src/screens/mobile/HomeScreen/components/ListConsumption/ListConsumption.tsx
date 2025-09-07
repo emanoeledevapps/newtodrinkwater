@@ -1,11 +1,15 @@
-import { ScrollView, View } from "react-native";
+import { View } from "react-native";
 
 import { WaterConsumptionProps } from "@db";
-import { Text } from "@components";
+import { Text, ConsumptionItem } from "@components";
 
 import { DateSelector } from "./DateSelector";
-import { ConsumptionItem } from "./ConsumptionItem";
 import { AddConsumption } from "./AddConsumption";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { MobileRoutesStackParamsList } from "@routes";
+import { useNavigation } from "@react-navigation/native";
+
+type NavigationProps = NativeStackNavigationProp<MobileRoutesStackParamsList, "HomeScreen">
 
 interface Props {
   selectedDate: Date;
@@ -14,7 +18,11 @@ interface Props {
   consumptionAdded: () => void;
 }
 export function ListConsumption({ changeDate, list, selectedDate, consumptionAdded }: Props) {
+  const navigation = useNavigation<NavigationProps>();
 
+  function handleGoToListScreen() {
+    navigation.navigate("ListScreen", { date: selectedDate })
+  }
   return (
     <View className="w-full px-5 gap-5 mt-[-120]">
       <View className="p-3 bg-card-light dark:bg-card-dark rounded-2xl">
@@ -23,14 +31,20 @@ export function ListConsumption({ changeDate, list, selectedDate, consumptionAdd
         {list.length === 0 ? (
           <EmptyList />
         ) : (
-          <ScrollView 
-            className="w-full h-[200]" 
-            showsVerticalScrollIndicator={false}
-          >
-            {list.map((item) => (
+          <View className="gap-2">
+            {list.slice(0, 3).map((item) => (
               <ConsumptionItem key={item.id} data={item} />
             ))}
-          </ScrollView>
+
+            {list.length > 3 && (
+              <Text 
+                className="text-primary-text-light dark:text-primary-text-dark my-2 underline text-center"
+                onPress={handleGoToListScreen}
+              >
+                Ver todos os registros
+              </Text>
+            )}
+          </View>
         )}
       </View>
       
