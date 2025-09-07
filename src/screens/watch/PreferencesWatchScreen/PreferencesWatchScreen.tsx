@@ -6,7 +6,7 @@ import { ChangeGoal } from "./components/ChangeGoal";
 
 export function PreferencesWatchScreen() {
   return (
-    <Screen watch titleWatch="Preferências">
+    <Screen watch titleWatch="Preferências" showBackWatch>
       <View className="px-5 mt-10 gap-5 mb-10">
         <ChangeGlassSize />
         <ChangeBottleSize />

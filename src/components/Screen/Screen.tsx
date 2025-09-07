@@ -1,7 +1,8 @@
 import React, { ReactNode } from "react";
 import { Keyboard, KeyboardAvoidingView, Platform, ScrollView, TouchableWithoutFeedback, View } from "react-native";
 
-import { Header, HeaderProps, StatusBar, Text } from "@components";
+import { Header, HeaderProps, Icon, StatusBar, Text } from "@components";
+import { useNavigation } from "@react-navigation/native";
 
 interface Props extends HeaderProps {
   children: ReactNode;
@@ -9,17 +10,35 @@ interface Props extends HeaderProps {
   hideHeader?: boolean;
   watch?: boolean;
   titleWatch?: string;
+  showBackWatch?: boolean
 }
 
-export function Screen({ children, scrollable, hideHeader, watch, titleWatch, ...headerProps }: Props) {
+export function Screen({ children, scrollable, hideHeader, watch, titleWatch, showBackWatch, ...headerProps }: Props) {
+  const navigation = useNavigation();
+
   if (watch) {
     return (
       <View className="flex-1 items-center justify-center bg-black">
         <ScrollView>
           {titleWatch && (
-            <Text className="mt-5 text-center text-white">
-              {titleWatch}
-            </Text>
+            <View className="flex-row items-center justify-between mt-14 px-7">
+              <View className="w-5">
+                {showBackWatch && (
+                  <Icon 
+                    name="chevronLeft" 
+                    size={15} 
+                    color="white" 
+                    onPress={() => navigation.goBack()}
+                  />
+                )}
+              </View>
+              
+              <Text className="text-center text-white">
+                {titleWatch}
+              </Text>
+              
+              <View className="w-5"/>
+            </View>
           )}
           {children}
         </ScrollView>
