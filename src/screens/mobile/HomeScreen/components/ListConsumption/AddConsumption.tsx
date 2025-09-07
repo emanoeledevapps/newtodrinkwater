@@ -68,7 +68,7 @@ export function AddConsumption({ consumptionAdded, selectedDate }: Props) {
           <ActivityIndicator size={20} color="white" />
         ) : (
           <View className="flex-row items-center gap-2">
-            <Icon name="glass" color="white" />
+            <Icon name="bottle" color="white" size={25} />
             <Text className="font-bold text-white">
               +{bottleSize} {unit}
             </Text>

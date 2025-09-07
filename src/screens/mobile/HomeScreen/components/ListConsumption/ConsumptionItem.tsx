@@ -14,7 +14,11 @@ export function ConsumptionItem({ data }: Props) {
         <Text className="text-primary-text-light dark:text-primary-text-dark">
           +{data.quantity} ml
         </Text>
-        <Icon name="glass" color="#aaa"/>
+        <Icon 
+          name={data.register_type === "bottle" ? "bottle" : "glass"} 
+          size={data.register_type === "bottle" ? 25 : 20} 
+          color="#aaa"
+        />
       </View>
         <Text className="text-primary-text-light dark:text-primary-text-dark">
           {formatInTimeZone(new Date(data.created_at + "Z"), "America/Sao_Paulo", "HH:mm")}

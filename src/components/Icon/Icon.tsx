@@ -3,6 +3,7 @@ import { ChevronLeftIcon } from "../../assets/icons/ChevronLeft";
 import { ChevronRightIcon } from "../../assets/icons/ChevronRight";
 import { CalendarIcon } from "../../assets/icons/Calendar";
 import { GlassIcon } from "../../assets/icons/Glass";
+import { BottleIcon } from "../../assets/icons/Bottle";
 
 export interface IconSvgProps {
   color?: string;
@@ -30,6 +31,7 @@ export function Icon({ name, onPress, color = "white", size = 20}: Props) {
 }
 
 const icons = {
+  bottle: BottleIcon,
   chevronLeft: ChevronLeftIcon,
   chevronRight: ChevronRightIcon,
   calendar: CalendarIcon,
