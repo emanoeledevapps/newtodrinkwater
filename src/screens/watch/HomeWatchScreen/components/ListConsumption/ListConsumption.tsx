@@ -32,7 +32,7 @@ export function ListConsumption({ list }: Props) {
 
 function EmptyList() {
   return (
-    <View className="h-[100] items-center justify-start pt-5">
+    <View className="h-[50] items-end justify-start pt-5">
       <Text className="text-primary-text-dark text-center">
         Nenhum registro feito hoje
       </Text>
