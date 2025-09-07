@@ -34,7 +34,6 @@ export function HomeWatchScreen({ navigation }: ScreenProps) {
         >
           <Text className="font-bold text-white text-sm">Preferências</Text>
         </TouchableOpacity>
-
       </View>
     </Screen>
   )
