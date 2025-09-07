@@ -24,7 +24,8 @@ export function Consumption({ total, consumptionAdded }: Props) {
     await dbService.addConsumption({
       formattedDate: format(new Date(), "dd/MM/yyyy"),
       quantity: glassSize,
-      registerType: "glass"
+      registerType: "glass",
+      origin: "watch"
     });
     consumptionAdded();
     sendTestMessageToMobile();

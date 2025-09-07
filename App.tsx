@@ -2,12 +2,11 @@ import { useEffect, useState } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import DeviceInfo from 'react-native-device-info';
 
-import { HomeWatchScreen } from '@screens';
 import { database } from '@db';
 import { PreferecesProvider } from '@contexts';
+import { MobileRoutes, WatchRoutes } from '@routes';
 
 import "./global.css";
-import { MobileRoutes } from '@routes';
 
 function App() {
   const [isWatch, setIsWatch] = useState(false);
@@ -32,7 +31,7 @@ function App() {
   return (
     <SafeAreaProvider>
       <PreferecesProvider>
-        {isWatch ? <HomeWatchScreen /> : <MobileRoutes /> }
+        {isWatch ? <WatchRoutes /> : <MobileRoutes /> }
       </PreferecesProvider>
     </SafeAreaProvider>
   );

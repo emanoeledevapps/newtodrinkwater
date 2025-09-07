@@ -1,15 +1,32 @@
 import React, { ReactNode } from "react";
 import { Keyboard, KeyboardAvoidingView, Platform, ScrollView, TouchableWithoutFeedback, View } from "react-native";
 
-import { Header, HeaderProps, StatusBar } from "@components";
+import { Header, HeaderProps, StatusBar, Text } from "@components";
 
 interface Props extends HeaderProps {
   children: ReactNode;
   scrollable?: boolean;
   hideHeader?: boolean;
+  watch?: boolean;
+  titleWatch?: string;
 }
 
-export function Screen({ children, scrollable, hideHeader, ...headerProps }: Props) {
+export function Screen({ children, scrollable, hideHeader, watch, titleWatch, ...headerProps }: Props) {
+  if (watch) {
+    return (
+      <View className="flex-1 items-center justify-center bg-black">
+        <ScrollView>
+          {titleWatch && (
+            <Text className="mt-5 text-center text-white">
+              {titleWatch}
+            </Text>
+          )}
+          {children}
+        </ScrollView>
+      </View>
+    )
+  }
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}

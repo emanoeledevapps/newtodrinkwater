@@ -1,13 +1,16 @@
-import { ScrollView, View } from "react-native";
-import { watchEvents } from 'react-native-wear-connectivity';
+import { useEffect, useState } from "react";
 
 import { useGetConsumptionDay } from "@db";
+import { Screen, Text } from "@components";
 
 import { Consumption } from "./components/Consumption";
 import { ListConsumption } from "./components/ListConsumption/ListConsumption";
-import { useEffect, useState } from "react";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { WatchRoutesStackParamsList } from "@routes";
+import { TouchableOpacity, View } from "react-native";
 
-export function HomeWatchScreen() {
+type ScreenProps = NativeStackScreenProps<WatchRoutesStackParamsList, "HomeWatchScreen">
+export function HomeWatchScreen({ navigation }: ScreenProps) {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const { list, totalConsumption, refetch } = useGetConsumptionDay({ date: selectedDate });
 
@@ -15,24 +18,24 @@ export function HomeWatchScreen() {
     setSelectedDate(new Date());
   }, [])
 
-  useEffect(() => {
-    const unsubscribe = watchEvents.on('message', (message) => {
-      console.log('received message from watch', message);
-      /*
-      * reply is not supported on Android
-      * reply({ text: 'Thanks watch!' });
-      */
-    });
-
-    return () => unsubscribe();
-  }, []);
+  function handleGoToPreferences() {
+    navigation.navigate("PreferencesWatchScreen")
+  }
 
   return (
-    <View className="flex-1 items-center justify-center bg-black">
-      <ScrollView>
-        <Consumption total={totalConsumption} consumptionAdded={refetch} />
-        <ListConsumption list={list} />
-      </ScrollView>
-    </View>
+    <Screen watch>
+      <Consumption total={totalConsumption} consumptionAdded={refetch} />
+      <ListConsumption list={list} />
+
+      <View className="items-center mb-10">
+        <TouchableOpacity
+          className="px-10 h-10 rounded-full bg-gray-700 items-center justify-center"
+          onPress={handleGoToPreferences}
+        >
+          <Text className="font-bold text-white text-sm">Preferências</Text>
+        </TouchableOpacity>
+
+      </View>
+    </Screen>
   )
 }
