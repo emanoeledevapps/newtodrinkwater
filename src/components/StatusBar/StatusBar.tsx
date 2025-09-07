@@ -5,7 +5,7 @@ export function StatusBar() {
   const { top } = useAppSafeArea();
 
   return (
-    <View className="bg-primary-light dark:bg-background-dark w-full" style={{ height: top }}>
+    <View className="bg-primary-light w-full" style={{ height: top }}>
       <RNStatusBar barStyle="light-content" />
     </View>
   )

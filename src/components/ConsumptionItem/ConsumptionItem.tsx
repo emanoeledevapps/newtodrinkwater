@@ -9,7 +9,7 @@ interface Props {
 }
 export function ConsumptionItem({ data }: Props) {
   return (
-    <View className="flex-row items-center justify-between w-full border-b border-gray-300 dark:border-background-dark py-2">
+    <View className="flex-row items-center justify-between w-full border-b border-gray-300 dark:border-gray-800 pt-2 pb-4">
       <View className="">
         <Text className="text-primary-text-light dark:text-primary-text-dark">
           +{data.quantity} ml

@@ -1,18 +1,27 @@
 import { View } from "react-native";
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
-import { Text } from "@components";
+import { Icon, Text } from "@components";
 import { usePreferencesContext } from "@hooks";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { MobileRoutesStackParamsList } from "@routes";
+import { useNavigation } from "@react-navigation/native";
 
+type NavigationProps = NativeStackNavigationProp<MobileRoutesStackParamsList, "HomeScreen">
 interface Props {
   total: number;
 }
 export function Consumption({ total }: Props) {
+  const navigation = useNavigation<NavigationProps>();
   const { goal, unit, darkMode } = usePreferencesContext();
   const percentDay = (total / goal) * 100;
 
+  function handleGoToPreferenceScreen() {
+    navigation.navigate("PreferencesScreen")
+  }
+
   return (
-    <View className="items-center">
+    <View className="items-center w-full relative">
       <AnimatedCircularProgress
         size={250}
         width={15}
@@ -37,6 +46,15 @@ export function Consumption({ total }: Props) {
           )
         }
       </AnimatedCircularProgress>
+
+        <View className="absolute top-0 right-5">
+          <Icon 
+            name="settings" 
+            size={25} 
+            color={darkMode ? "#aaa" :  "black"} 
+            onPress={handleGoToPreferenceScreen}
+          />
+        </View>
     </View>
   )
 }
