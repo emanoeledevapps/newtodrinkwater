@@ -14,7 +14,11 @@ export function ConsumptionItem({ data }: Props) {
   return (
     <View className="flex-row items-center justify-between w-full border-b border-gray-800 py-3">
       <View className="flex-row items-center gap-1">
-        <Icon name="glass" color="#aaa" size={16}/>
+        <Icon 
+          name={data.register_type === "bottle" ? "bottle" : "glass"} 
+          size={data.register_type === "bottle" ? 20 : 16}
+          color="#aaa" 
+        />
         <Text className="text-primary-text-dark">
           +{data.quantity} {unit}
         </Text>

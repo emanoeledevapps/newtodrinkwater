@@ -70,7 +70,7 @@ export function Consumption({ total, consumptionAdded }: Props) {
         }
       </AnimatedCircularProgress>
       
-      <View className="mt-[-65] flex-row gap-5 justify-center">
+      <View className="mt-[-60] flex-row gap-5 justify-center">
         <TouchableOpacity
           className="w-16 h-16 rounded-full bg-gray-700 items-center justify-center"
           onPress={handleAddGlassConsumption}
