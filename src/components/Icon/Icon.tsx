@@ -5,6 +5,8 @@ import { CalendarIcon } from "../../assets/icons/Calendar";
 import { GlassIcon } from "../../assets/icons/Glass";
 import { BottleIcon } from "../../assets/icons/Bottle";
 import { SettingsIcon } from "../../assets/icons/Settings";
+import { PlusIcon } from "../../assets/icons/Plus";
+import { MinusIcon } from "../../assets/icons/Minus";
 
 export interface IconSvgProps {
   color?: string;
@@ -37,6 +39,8 @@ const icons = {
   chevronRight: ChevronRightIcon,
   calendar: CalendarIcon,
   glass: GlassIcon,
-  settings: SettingsIcon
+  settings: SettingsIcon,
+  plus: PlusIcon,
+  minus: MinusIcon
 }
 export type IconNames = keyof typeof icons;

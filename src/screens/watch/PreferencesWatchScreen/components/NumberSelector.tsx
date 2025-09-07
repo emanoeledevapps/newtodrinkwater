@@ -17,7 +17,7 @@ export function NumberSelector({ handleMinus, handlePlus, value }: Props) {
         className="w-10 h-full items-center justify-center disabled:opacity-50"
         disabled={value === 0}
       >
-        <Icon name="chevronLeft" color="white" />
+        <Icon name="minus" color="white" />
       </TouchableOpacity>
 
       <View className={`h-full w-[80] flex-row border-l border-r border-gray-800 items-center justify-center gap-1`}>
@@ -32,7 +32,7 @@ export function NumberSelector({ handleMinus, handlePlus, value }: Props) {
         onPress={handlePlus}
         className="w-10 h-full items-center justify-center"
       >
-        <Icon name="chevronRight" color="white" />
+        <Icon name="plus" color="white" />
       </TouchableOpacity>
     </View>
   )

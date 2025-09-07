@@ -1,8 +1,8 @@
 import React, { ReactNode } from "react";
 import { Keyboard, KeyboardAvoidingView, Platform, ScrollView, TouchableWithoutFeedback, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 import { Header, HeaderProps, Icon, StatusBar, Text } from "@components";
-import { useNavigation } from "@react-navigation/native";
 
 interface Props extends HeaderProps {
   children: ReactNode;
@@ -26,7 +26,6 @@ export function Screen({ children, scrollable, hideHeader, watch, titleWatch, sh
                 {showBackWatch && (
                   <Icon 
                     name="chevronLeft" 
-                    size={15} 
                     color="white" 
                     onPress={() => navigation.goBack()}
                   />
