@@ -2,14 +2,14 @@ import { useEffect, useState } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import DeviceInfo from 'react-native-device-info';
 
-import { HomeScreen, HomeWatchScreen } from '@screens';
+import { HomeWatchScreen } from '@screens';
 import { database } from '@db';
 import { PreferecesProvider } from '@contexts';
 
 import "./global.css";
+import { MobileRoutes } from '@routes';
 
 function App() {
-  const [loadingApp, setLoadingApp] = useState(true);
   const [isWatch, setIsWatch] = useState(false);
 
   useEffect(() => {
@@ -18,10 +18,8 @@ function App() {
   }, []);
 
   async function initDB() {
-    setLoadingApp(true);
     await database.openDB();
     await database.createTable();
-    setLoadingApp(false);
   }
 
   async function checkDevice() {
@@ -34,7 +32,7 @@ function App() {
   return (
     <SafeAreaProvider>
       <PreferecesProvider>
-        {isWatch ? <HomeWatchScreen /> : <HomeScreen /> }
+        {isWatch ? <HomeWatchScreen /> : <MobileRoutes /> }
       </PreferecesProvider>
     </SafeAreaProvider>
   );
