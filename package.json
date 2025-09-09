@@ -20,6 +20,7 @@
     "nativewind": "^4.1.23",
     "react": "19.1.0",
     "react-native": "0.81.0",
+    "react-native-bootsplash": "^6.3.11",
     "react-native-circular-progress": "^1.4.1",
     "react-native-device-info": "^14.0.4",
     "react-native-reanimated": "^4.0.2",

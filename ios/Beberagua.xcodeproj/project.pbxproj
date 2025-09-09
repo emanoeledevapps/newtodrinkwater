@@ -12,6 +12,8 @@
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		DB0817B890B9515F9C63F4B3 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
+		5530FB6208B2425A9949BDF8 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7EF77D45C85B4188988C1737 /* BootSplash.storyboard */; };
+		F137BEA83BD849AAA48AC317 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FEE6CBE24082457AB4BE9690 /* Colors.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +27,8 @@
 		86F0E89BE5F61E8BE466EC06 /* Pods_Beberagua.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Beberagua.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		94C88790952C0E9D466AEAA7 /* Pods-Beberagua.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Beberagua.release.xcconfig"; path = "Target Support Files/Pods-Beberagua/Pods-Beberagua.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		7EF77D45C85B4188988C1737 /* BootSplash.storyboard */ = {isa = PBXFileReference; name = "BootSplash.storyboard"; path = "Beberagua/BootSplash.storyboard"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		FEE6CBE24082457AB4BE9690 /* Colors.xcassets */ = {isa = PBXFileReference; name = "Colors.xcassets"; path = "Beberagua/Colors.xcassets"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = folder.assetcatalog; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +51,8 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */,
+				7EF77D45C85B4188988C1737 /* BootSplash.storyboard */,
+				FEE6CBE24082457AB4BE9690 /* Colors.xcassets */,
 			);
 			name = Beberagua;
 			sourceTree = "<group>";
@@ -161,6 +167,8 @@
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				DB0817B890B9515F9C63F4B3 /* PrivacyInfo.xcprivacy in Resources */,
+				5530FB6208B2425A9949BDF8 /* BootSplash.storyboard in Resources */,
+				F137BEA83BD849AAA48AC317 /* Colors.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
