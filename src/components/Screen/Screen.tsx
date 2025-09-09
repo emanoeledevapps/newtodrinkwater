@@ -3,6 +3,7 @@ import { Keyboard, KeyboardAvoidingView, Platform, ScrollView, TouchableWithoutF
 import { useNavigation } from "@react-navigation/native";
 
 import { Header, HeaderProps, Icon, StatusBar, Text } from "@components";
+import { useAppSafeArea } from "@hooks";
 
 interface Props extends HeaderProps {
   children: ReactNode;
@@ -15,6 +16,7 @@ interface Props extends HeaderProps {
 
 export function Screen({ children, scrollable, hideHeader, watch, titleWatch, showBackWatch, ...headerProps }: Props) {
   const navigation = useNavigation();
+  const { bottom } = useAppSafeArea();
 
   if (watch) {
     return (
@@ -50,7 +52,10 @@ export function Screen({ children, scrollable, hideHeader, watch, titleWatch, sh
       style={{ flex: 1 }}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-      <View className="flex-1 bg-background dark:bg-black">
+      <View 
+        className="flex-1 bg-background dark:bg-black" 
+        style={{ paddingBottom: bottom}}
+      >
         <StatusBar />
         {!hideHeader && (
           <Header {...headerProps} />
