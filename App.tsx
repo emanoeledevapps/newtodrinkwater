@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import DeviceInfo from 'react-native-device-info';
+import BootSplash from "react-native-bootsplash";
 
 import { database } from '@db';
 import { PreferecesProvider } from '@contexts';
@@ -19,6 +20,7 @@ function App() {
   async function initDB() {
     await database.openDB();
     await database.createTable();
+    BootSplash.hide({ fade: true });
   }
 
   async function checkDevice() {
