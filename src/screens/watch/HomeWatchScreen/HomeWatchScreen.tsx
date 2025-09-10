@@ -1,8 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
-import { TouchableOpacity, View, AppState } from "react-native";
+import { TouchableOpacity, View, AppState, Platform } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { watchEvents } from "react-native-wear-connectivity";
 
-import { useGetConsumptionDay } from "@db";
+import { connectivityService, MessageListDayProps, MessageType } from "@connectivity";
+import { dbService, useGetConsumptionDay } from "@db";
 import { Icon, Screen, Text } from "@components";
 import { WatchRoutesStackParamsList } from "@routes";
 
@@ -21,10 +24,50 @@ export function HomeWatchScreen({ navigation }: ScreenProps) {
         setSelectedDate(new Date());
       }
       setAppState(nextAppState);
+      if (Platform.OS === "android") {
+        connectivityService.sendListDay({origin: "watch", date: selectedDate})
+      }
     });
 
     return () => sub.remove();
-  }, [appState])
+  }, [appState, selectedDate]);
+
+  useEffect(() => {
+    const unsubscribe = watchEvents.on('message', (message) => {
+      const messageType = message?.type as MessageType;
+
+      if(messageType === "list-day") {
+        const msg = message as MessageListDayProps;
+        if (msg.messageOrigin === "smartphone") {
+          handleRegisterListDay(msg);
+        }
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+  
+  async function handleRegisterListDay(msg: MessageListDayProps) {
+    const listItems = msg.list
+    for (let i = 0; i < listItems.length; i++) {
+      const item = listItems[i];
+      try {
+        await dbService.addConsumptionFromConnectivity({
+          created_at: item.created_at,
+          formatted_date: item.formatted_date,
+          id: item.id,
+          origin: item.origin,
+          quantity: item.quantity,
+          register_type: item.register_type
+        })
+      } catch (e) {
+        console.log(e)
+      }
+    }
+    refetch();
+  }
 
   function handleGoToPreferences() {
     navigation.navigate("PreferencesWatchScreen")

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { PermissionsAndroid, Platform } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import DeviceInfo from 'react-native-device-info';
 import BootSplash from "react-native-bootsplash";
@@ -15,6 +16,7 @@ function App() {
   useEffect(() => {
     checkDevice();
     initDB();
+    requestBluetoothPermissions();
   }, []);
 
   async function initDB() {
@@ -29,6 +31,17 @@ function App() {
     );
     setIsWatch(response);
   }
+
+  async function requestBluetoothPermissions() {
+  if (Platform.OS === 'android' && Platform.Version >= 31) {
+    const granted = await PermissionsAndroid.requestMultiple([
+      PermissionsAndroid.PERMISSIONS.BLUETOOTH_CONNECT,
+      PermissionsAndroid.PERMISSIONS.BLUETOOTH_SCAN,
+    ]);
+
+    console.log('Bluetooth permissions:', granted);
+  }
+}
 
   return (
     <SafeAreaProvider>

@@ -1,10 +1,10 @@
-import { database, WaterConsumptionProps } from "@db";
+import { database, Origin, RegisterType, WaterConsumptionProps } from "@db";
 
 interface AddConsumptionProps {
   quantity: number;
   formattedDate: string;
-  registerType: "glass" | "bottle";
-  origin: "smartphone" | "watch";
+  registerType: RegisterType;
+  origin: Origin;
 }
 async function addConsumption({ formattedDate, quantity, registerType, origin }: AddConsumptionProps) {
   await database.insertConsumption({ formattedDate, quantity, registerType, origin })
@@ -18,7 +18,28 @@ async function getConsumptionPerDay({ formattedDate }: GetConsumptionPerDayProps
   return response
 }
 
+interface CheckConsumptionExistsProps {
+  createdAt: string;
+}
+async function checkConsumptionExists({ createdAt }: CheckConsumptionExistsProps): Promise<boolean> {
+  const response = await database.consumptionExists({ createdAt })
+  return response
+}
+
+async function addConsumptionFromConnectivity(data: WaterConsumptionProps): Promise<void> {
+  await database.insertConsumptionFromConnectivity({
+    id: data.id,
+    created_at: data.created_at,
+    formatted_date: data.formatted_date,
+    origin: data.origin,
+    quantity: data.quantity,
+    register_type: data.register_type
+  })
+}
+
 export const dbService = {
   addConsumption,
-  getConsumptionPerDay
+  getConsumptionPerDay,
+  checkConsumptionExists,
+  addConsumptionFromConnectivity
 }

@@ -6,6 +6,7 @@ import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import { Icon, Text } from "@components";
 import { dbService } from "@db";
 import { usePreferencesContext } from "@hooks";
+import { connectivityService } from "@connectivity";
 
 interface Props {
   total: number;
@@ -28,6 +29,7 @@ export function Consumption({ total, consumptionAdded }: Props) {
       origin: "watch"
     });
     consumptionAdded();
+    handleSendMessageToSmartphone();
     setLoadingGlass(false);
   }
 
@@ -40,7 +42,15 @@ export function Consumption({ total, consumptionAdded }: Props) {
       origin: "watch"
     });
     consumptionAdded();
+    handleSendMessageToSmartphone();
     setLoadingBottle(false);
+  }
+
+  function handleSendMessageToSmartphone() {
+    connectivityService.sendListDay({
+      date: new Date(),
+      origin: "watch"
+    });
   }
 
   return (
