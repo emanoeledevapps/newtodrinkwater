@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
-import { TouchableOpacity, View, AppState, Platform } from "react-native";
+import { TouchableOpacity, View, AppState } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { watchEvents } from "react-native-wear-connectivity";
 
-import { connectivityService, MessageListDayProps, MessageType } from "@connectivity";
+import { connectivityService, MessageGetListDay, MessageListDayProps, MessageType } from "@connectivity";
 import { dbService, useGetConsumptionDay } from "@db";
 import { Icon, Screen, Text } from "@components";
 import { WatchRoutesStackParamsList } from "@routes";
@@ -19,18 +19,23 @@ export function HomeWatchScreen({ navigation }: ScreenProps) {
   const [appState, setAppState] = useState(AppState.currentState);
 
   useEffect(() => {
+    async function sendMessagesToSmartphone() {
+      await connectivityService.sendListDay({origin: "watch", date: selectedDate });
+    }
+    sendMessagesToSmartphone();
+  }, [selectedDate, appState]);
+  
+  useEffect(() => {
     const sub = AppState.addEventListener("change", nextAppState => {
       if (appState.match(/inactive|background/) && nextAppState === "active") {
         setSelectedDate(new Date());
       }
       setAppState(nextAppState);
-      if (Platform.OS === "android") {
-        connectivityService.sendListDay({origin: "watch", date: selectedDate})
-      }
     });
-
+    
+    connectivityService.getListDay({ origin: "watch" });
     return () => sub.remove();
-  }, [appState, selectedDate]);
+  }, [appState]);
 
   useEffect(() => {
     const unsubscribe = watchEvents.on('message', (message) => {
@@ -40,6 +45,16 @@ export function HomeWatchScreen({ navigation }: ScreenProps) {
         const msg = message as MessageListDayProps;
         if (msg.messageOrigin === "smartphone") {
           handleRegisterListDay(msg);
+        }
+      }
+
+      if(messageType === "get-list-day") {
+        const msg = message as MessageGetListDay;
+        if (msg.messageOrigin === "smartphone") {
+          connectivityService.sendListDay({
+            origin: "watch",
+            date: new Date()
+          })
         }
       }
     });

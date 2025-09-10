@@ -10,7 +10,7 @@ import { MobileRoutesStackParamsList } from "@routes";
 
 import { Consumption } from "./components/Consumption";
 import { ListConsumption } from "./components/ListConsumption/ListConsumption";
-import { connectivityService, MessageListDayProps, MessageType } from "@connectivity";
+import { connectivityService, MessageGetListDay, MessageListDayProps, MessageType } from "@connectivity";
 
 type ScreenProps = NativeStackScreenProps<MobileRoutesStackParamsList, "HomeScreen">
 export function HomeScreen({ }: ScreenProps) {
@@ -19,24 +19,42 @@ export function HomeScreen({ }: ScreenProps) {
   const { list, totalConsumption, refetch } = useGetConsumptionDay({ date: selectedDate });
 
   useEffect(() => {
+    async function sendMessagesToWatch() {
+      await connectivityService.sendListDay({origin: "smartphone", date: selectedDate });
+    }
+    sendMessagesToWatch();
+  }, [selectedDate, appState]);
+  
+  useEffect(() => {
     const sub = AppState.addEventListener("change", nextAppState => {
       if (appState.match(/inactive|background/) && nextAppState === "active") {
         setSelectedDate(new Date());
       }
       setAppState(nextAppState);
-      connectivityService.sendListDay({origin: "smartphone", date: selectedDate })
     });
-
+    
+    connectivityService.getListDay({ origin: "smartphone" });
     return () => sub.remove();
-  }, [appState, selectedDate]);
+  }, [appState]);
 
   useEffect(() => {
     const unsubscribe = watchEvents.on('message', (message) => {
       const messageType = message?.type as MessageType;
+
       if(messageType === "list-day") {
         const msg = message as MessageListDayProps
         if (msg.messageOrigin === "watch") {
           handleRegisterListDay(msg);
+        }
+      }
+
+      if(messageType === "get-list-day") {
+        const msg = message as MessageGetListDay;
+        if (msg.messageOrigin === "watch") {
+          connectivityService.sendListDay({
+            origin: "smartphone",
+            date: new Date()
+          })
         }
       }
     });
