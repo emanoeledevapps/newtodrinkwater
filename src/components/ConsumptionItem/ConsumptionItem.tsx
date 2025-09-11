@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import { formatInTimeZone } from "date-fns-tz";
+import { format } from "date-fns";
 
 import { WaterConsumptionProps } from "@db";
 import { Icon, Text } from "@components";
@@ -21,7 +21,7 @@ export function ConsumptionItem({ data }: Props) {
         />
       </View>
         <Text className="text-primary-text-light dark:text-primary-text-dark">
-          {formatInTimeZone(new Date(data.created_at + "Z"), "America/Sao_Paulo", "HH:mm")}
+          {format(new Date(data.created_at), "kk:mm")} 
         </Text>
     </View>
   )
