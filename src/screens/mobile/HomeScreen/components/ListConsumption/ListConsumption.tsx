@@ -58,7 +58,7 @@ export function ListConsumption({ changeDate, list, selectedDate, consumptionAdd
 
 function EmptyList() {
   return (
-    <View className="h-[200] items-center justify-center">
+    <View className="h-[50] items-center justify-center">
       <Text className="text-primary-text-light dark:text-primary-text-dark">
         Nenhum registro feito
       </Text>

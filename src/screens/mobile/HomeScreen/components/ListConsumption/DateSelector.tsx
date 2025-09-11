@@ -16,7 +16,7 @@ export function DateSelector({ selectedDate, changeDate }: Props) {
 
   return (
     <View 
-      className="w-full flex-row items-center justify-between border-b border-gray-300 dark:border-background-dark pb-3"
+      className="w-full flex-row items-center justify-between pb-3"
     >
       <View className="flex-row items-center gap-3">
         <Icon
