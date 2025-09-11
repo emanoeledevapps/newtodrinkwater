@@ -7,6 +7,8 @@ import { BottleIcon } from "../../assets/icons/Bottle";
 import { SettingsIcon } from "../../assets/icons/Settings";
 import { PlusIcon } from "../../assets/icons/Plus";
 import { MinusIcon } from "../../assets/icons/Minus";
+import { WatchIcon } from "../../assets/icons/Watch";
+import { MobileIcon } from "../../assets/icons/Mobile";
 
 export interface IconSvgProps {
   color?: string;
@@ -41,6 +43,8 @@ const icons = {
   glass: GlassIcon,
   settings: SettingsIcon,
   plus: PlusIcon,
-  minus: MinusIcon
+  minus: MinusIcon,
+  watch: WatchIcon,
+  mobile: MobileIcon
 }
 export type IconNames = keyof typeof icons;

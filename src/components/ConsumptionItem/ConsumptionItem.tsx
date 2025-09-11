@@ -24,6 +24,12 @@ export function ConsumptionItem({ data }: Props) {
         <Text className="text-primary-text-light dark:text-primary-text-dark">
           +{data.quantity} ml
         </Text>
+        {data.origin === "watch" && (
+          <View className="flex-row items-center gap-2 ml-3">
+            <View className="w-1 h-1 rounded-full bg-primary-text-light dark:bg-primary-text-dark" />
+            <Icon name="watch" color={darkMode ? "#E0F2FE" : "#1E3A8A"}/>
+          </View>
+        )}
       </View>
 
       <Text className="text-primary-text-light dark:text-primary-text-dark">
