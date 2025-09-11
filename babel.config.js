@@ -11,6 +11,7 @@ module.exports = {
         '@db': './src/db',
         '@contexts': './src/contexts',
         '@routes': './src/routes',
+        '@connectivity': './src/connectivity',
       },
     }],
   ]

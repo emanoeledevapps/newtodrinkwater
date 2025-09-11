@@ -1,8 +1,11 @@
+export type RegisterType = "glass" | "bottle";
+export type Origin = "smartphone" | "watch";
+
 export interface WaterConsumptionProps {
-  id: number;
+  id: string;
   quantity: number;
   created_at: string;
   formatted_date: string;
-  register_type: "glass" | "bottle"
-  origin: "smartphone" | "watch"
+  register_type: RegisterType;
+  origin: Origin;
 }

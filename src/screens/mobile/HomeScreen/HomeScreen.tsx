@@ -1,13 +1,16 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import { View, AppState, Linking } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { watchEvents } from "react-native-wear-connectivity";
 
 import { Screen, Text } from "@components";
-import { useGetConsumptionDay } from "@db";
+import { dbService, useGetConsumptionDay } from "@db";
 import { MobileRoutesStackParamsList } from "@routes";
 
 import { Consumption } from "./components/Consumption";
 import { ListConsumption } from "./components/ListConsumption/ListConsumption";
+import { connectivityService, MessageGetListDay, MessageListDayProps, MessageType } from "@connectivity";
 
 type ScreenProps = NativeStackScreenProps<MobileRoutesStackParamsList, "HomeScreen">
 export function HomeScreen({ }: ScreenProps) {
@@ -16,15 +19,70 @@ export function HomeScreen({ }: ScreenProps) {
   const { list, totalConsumption, refetch } = useGetConsumptionDay({ date: selectedDate });
 
   useEffect(() => {
+    async function sendMessagesToWatch() {
+      await connectivityService.sendListDay({origin: "smartphone", date: selectedDate });
+    }
+    sendMessagesToWatch();
+  }, [selectedDate, appState]);
+  
+  useEffect(() => {
     const sub = AppState.addEventListener("change", nextAppState => {
       if (appState.match(/inactive|background/) && nextAppState === "active") {
         setSelectedDate(new Date());
       }
       setAppState(nextAppState);
     });
-
+    
+    connectivityService.getListDay({ origin: "smartphone" });
     return () => sub.remove();
   }, [appState]);
+
+  useEffect(() => {
+    const unsubscribe = watchEvents.on('message', (message) => {
+      const messageType = message?.type as MessageType;
+
+      if(messageType === "list-day") {
+        const msg = message as MessageListDayProps
+        if (msg.messageOrigin === "watch") {
+          handleRegisterListDay(msg);
+        }
+      }
+
+      if(messageType === "get-list-day") {
+        const msg = message as MessageGetListDay;
+        if (msg.messageOrigin === "watch") {
+          connectivityService.sendListDay({
+            origin: "smartphone",
+            date: new Date()
+          })
+        }
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+  async function handleRegisterListDay(msg: MessageListDayProps) {
+    const listItems = msg.list
+    for (let i = 0; i < listItems.length; i++) {
+      const item = listItems[i];
+      try {
+        await dbService.addConsumptionFromConnectivity({
+          created_at: item.created_at,
+          formatted_date: item.formatted_date,
+          id: item.id,
+          origin: item.origin,
+          quantity: item.quantity,
+          register_type: item.register_type
+        })
+      } catch (e) {
+        console.log(e)
+      }
+    }
+    refetch();
+  }
 
   function handleOpenPrivacyPolicy() {
     Linking.openURL("https://www.edevapps.com.br/terms/to-drink-water/privacy-policy");

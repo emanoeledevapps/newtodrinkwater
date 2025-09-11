@@ -5,6 +5,7 @@ import { format, isToday } from "date-fns";
 import { dbService } from "@db";
 import { Icon, Text } from "@components";
 import { usePreferencesContext } from "@hooks";
+import { connectivityService } from "@connectivity";
 
 interface Props {
   selectedDate: Date;
@@ -25,6 +26,7 @@ export function AddConsumption({ consumptionAdded, selectedDate }: Props) {
       origin: "smartphone"
     });
     consumptionAdded();
+    handleSendMessageToWatch();
     setLoadingGlass(false);
   }
 
@@ -37,7 +39,15 @@ export function AddConsumption({ consumptionAdded, selectedDate }: Props) {
       origin: "smartphone"
     });
     consumptionAdded();
+    handleSendMessageToWatch();
     setLoadingBottle(false);
+  }
+
+  function handleSendMessageToWatch() {
+    connectivityService.sendListDay({
+      date: new Date(),
+      origin: "smartphone"
+    });
   }
 
   return (
